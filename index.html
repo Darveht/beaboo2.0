@@ -361,14 +361,26 @@ body {
 
 #search-loading .dot:nth-child(1) {
   background-color: #FE2C55; /* Rojo TikTok */
-  animation: tiktok-spin 1.5s linear infinite;
-  transform: translate(-50%, -50%) rotate(0deg) translateX(15px) rotate(0deg);
+  animation: tiktok-orbit 1.5s linear infinite;
 }
 
 #search-loading .dot:nth-child(2) {
   background-color: #00F2EA; /* Cian TikTok */
-  animation: tiktok-spin 1.5s linear infinite reverse;
-  transform: translate(-50%, -50%) rotate(180deg) translateX(15px) rotate(180deg);
+  animation: tiktok-orbit 1.5s linear infinite;
+  animation-delay: -0.75s;
+}
+
+@keyframes tiktok-orbit {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg) translateX(20px);
+  }
+  100% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(360deg) translateX(20px);
+  }
 }
 
 /* Estilos para la barra de búsqueda en la barra inferior */
@@ -1413,10 +1425,10 @@ setInterval(checkScheduledChapters, 60000);
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
     </div>
-    <div id="search-loading-container" class="hidden flex justify-center items-center py-4">
-      <div id="search-loading" class="relative w-12 h-12">
-        <div class="dot absolute w-4 h-4 bg-[#FE2C55] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style="animation: tiktok-spin 1.5s infinite linear;"></div>
-        <div class="dot absolute w-4 h-4 bg-white rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style="animation: tiktok-spin 1.5s infinite linear reverse;"></div>
+    <div id="search-loading-container" class="hidden flex justify-center items-center py-8">
+      <div id="search-loading" class="relative w-16 h-16">
+        <div class="dot"></div>
+        <div class="dot"></div>
       </div>
     </div>
     <div id="search-results" class="mt-4">
@@ -2139,6 +2151,11 @@ firebase.auth().onAuthStateChanged(user => {
     <button onclick="openHome()" class="text-gray-600 hover:text-[#FE2C55]">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    </button>
+    <button onclick="openSearchView()" class="text-gray-600 hover:text-[#FE2C55]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
     </button>
     <button onclick="openCommunity()" class="text-gray-600 hover:text-[#FE2C55]">
