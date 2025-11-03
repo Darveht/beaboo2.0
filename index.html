@@ -326,7 +326,75 @@ body {
   z-index: 10;
 }
 
-/* ANIMACIÓN DE CARGA EN BÚSQUEDA */
+/* ANIMACIÓN DE CARGA EN BÚSQUEDA (TIKTOK STYLE) */
+@keyframes tiktok-spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+#search-loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#search-loading {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+#search-loading .dot {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+#search-loading .dot:nth-child(1) {
+  background-color: #FE2C55; /* Rojo TikTok */
+  animation: tiktok-spin 1.5s linear infinite;
+  transform: translate(-50%, -50%) rotate(0deg) translateX(15px) rotate(0deg);
+}
+
+#search-loading .dot:nth-child(2) {
+  background-color: #00F2EA; /* Cian TikTok */
+  animation: tiktok-spin 1.5s linear infinite reverse;
+  transform: translate(-50%, -50%) rotate(180deg) translateX(15px) rotate(180deg);
+}
+
+/* Estilos para la barra de búsqueda en la barra inferior */
+#search-input-nav {
+  /* Asegurar que el input sea visible y esté bien estilizado */
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px 15px 10px 40px;
+  border-radius: 25px;
+  font-size: 16px;
+  color: #333;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#search-input-nav:focus {
+  background-color: #fff;
+  box-shadow: 0 0 0 2px #FE2C55;
+}
+
+.search-icon-nav {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
 #search-loading {
   position: relative;
   width: 50px;
@@ -1326,7 +1394,53 @@ setInterval(checkScheduledChapters, 60000);
 </div>
 
 <!-- MODAL DE SOPORTE -->
-<div id="support-modal" class="fixed inset-0 z-50 hidden bg-white">
+<d<div id="search-view" class="fixed inset-0 z-50 hidden bg-white">
+  <div class="p-4">
+    <div class="flex items-center justify-between">
+      <button onclick="closeSearchView()" class="text-gray-700 hover:text-[#FE2C55] transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <h2 class="text-xl font-bold text-gray-900">Buscar</h2>
+      <div style="width: 24px;"></div>
+    </div>
+  </div>
+  <div class="p-4 pt-0">
+    <div class="relative">
+      <input id="search-input" type="text" placeholder="Search for stories or authors" class="w-full pl-12 pr-4 py-3 rounded-full bg-gray-100 text-black border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#FE2C55] focus:border-transparent text-base">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+    <div id="search-loading-container" class="hidden flex justify-center items-center py-4">
+      <div id="search-loading" class="relative w-12 h-12">
+        <div class="dot absolute w-4 h-4 bg-[#FE2C55] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style="animation: tiktok-spin 1.5s infinite linear;"></div>
+        <div class="dot absolute w-4 h-4 bg-white rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style="animation: tiktok-spin 1.5s infinite linear reverse;"></div>
+      </div>
+    </div>
+    <div id="search-results" class="mt-4">
+      <div class="flex border-b border-gray-200 mb-4">
+        <button data-tab="books" class="tab-button active flex-1 py-2 text-center text-[#FE2C55] border-b-2 border-[#FE2C55] font-medium">Stories</button>
+        <button data-tab="authors" class="tab-button flex-1 py-2 text-center text-gray-500 font-medium">Authors</button>
+      </div>
+      <!-- Stories Section -->
+      <div id="books-section" class="block">
+        <h3 id="search-books-title" class="text-base font-semibold mb-3 text-[#FE2C55]">Stories</h3>
+        <div id="search-books-carousel" class="flex space-x-3 overflow-x-auto mb-6 p-1 scrollbar-hide">
+          <!-- Stories will be loaded from Firebase here -->
+        </div>
+      </div>
+      <!-- Authors Section -->
+      <div id="authors-section" class="hidden">
+        <h3 id="search-authors-title" class="text-base font-semibold mb-3 text-[#FE2C55]">Authors</h3>
+        <div id="search-authors-list" class="space-y-3">
+          <!-- Authors will be loaded from Firebase here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="w-full h-full min-h-screen">
     <div id="support-form-container" class="bg-white h-full min-h-screen p-8">
       <div class="flex items-center mb-6">
@@ -2021,6 +2135,35 @@ firebase.auth().onAuthStateChanged(user => {
 
   <!-- BOTTOM NAVIGATION TIKTOK STYLE -->
   <div id="bottom-nav" class="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white transition-transform duration-300">
+  <div class="flex justify-around items-center p-2 w-full">
+    <button onclick="openHome()" class="text-gray-600 hover:text-[#FE2C55]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    </button>
+    <button onclick="openCommunity()" class="text-gray-600 hover:text-[#FE2C55]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20v-2c0-.656-.126-1.283-.356-1.857M9 20H4v-2a3 3 0 015-2.236M9 20v-2a3 3 0 00-5.356-1.857M10 9a3 3 0 11-6 0 3 3 0 016 0zm9 0a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    </button>
+    <button onclick="openStoryCreation()" class="text-gray-600 hover:text-[#FE2C55]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </button>
+    <button onclick="openNotifications()" class="text-gray-600 hover:text-[#FE2C55] relative">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+      </svg>
+      <span id="unread-notifications-badge" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full hidden">0</span>
+    </button>
+    <button onclick="openProfile()" class="text-gray-600 hover:text-[#FE2C55]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    </button>
+  </div>
+</div>
     <div class="grid grid-cols-4 gap-2 p-3">
       <button onclick="openHome()" class="flex flex-col items-center text-[#161823] hover:text-[#FE2C55] transition">
         <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
@@ -5759,9 +5902,57 @@ async function likeNote(noteId) {
     // Mostrar la barra de navegación superior cuando se vuelve al home
     const topNav = document.getElementById('top-navbar');
     if (topNav) topNav.style.display = 'flex';
-  }
+  }function openSearchView() {
+  document.getElementById('search-view').classList.remove('hidden');
+  document.getElementById('search-input').focus();
+}
 
-  function openSearch() {
+function closeSearchView() {
+  document.getElementById('search-view').classList.add('hidden');
+}
+
+function showSearchLoading() {
+  const loadingContainer = document.getElementById('search-loading-container');
+  if (loadingContainer) {
+    loadingContainer.classList.remove('hidden');
+  }
+}
+
+function hideSearchLoading() {
+  const loadingContainer = document.getElementById('search-loading-container');
+  if (loadingContainer) {
+    loadingContainer.classList.add('hidden');
+  }
+}
+
+function performSearchWithLoading() {
+  showSearchLoading();
+  // Simular la búsqueda (reemplazar con la lógica real de búsqueda)
+  setTimeout(() => {
+    hideSearchLoading();
+    // Aquí iría la lógica para mostrar los resultados de la búsqueda
+  }, 2000); // 2 segundos de animación de carga
+}
+
+// Modificar la función de búsqueda en tiempo real para usar la nueva barra
+function performRealTimeSearch() {
+  const query = document.getElementById('search-input').value.trim().toLowerCase();
+  if (query.length > 2) {
+    showSearchLoading();
+    // Lógica de búsqueda real
+    // ...
+    // Simular la finalización de la búsqueda
+    setTimeout(() => {
+      hideSearchLoading();
+      // Mostrar resultados
+    }, 1500);
+  } else {
+    // Limpiar resultados si la consulta es muy corta
+    // ...
+  }
+}
+
+function openSearchView() {
     const mainApp = document.getElementById('main-app');
     if (mainApp) mainApp.classList.add('hidden');
     document.getElementById('search-view').classList.remove('hidden');
@@ -6742,6 +6933,7 @@ async function likeNote(noteId) {
 }
 
 document.getElementById('search-input').addEventListener('input', performRealTimeSearch);
+document.getElementById('search-input-nav').addEventListener('input', performRealTimeSearch);
 document.getElementById('category-filter').addEventListener('change', performRealTimeSearch);
   async function performSearch(query) {
     await new Promise(resolve => setTimeout(resolve, 3000));
