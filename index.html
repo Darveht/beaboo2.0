@@ -1549,104 +1549,8 @@ body {
   <i class="fas fa-spinner fa-spin text-4xl" style="color:#58CC02;"></i>
 </div>
 
-<!-- PANTALLA DE CHAT EN TIEMPO REAL -->
-<!-- Chat view removed -->
-  <!-- conversations-view eliminado -->
-          <div class="flex flex-col">
-            <h2 class="text-xl font-bold">Chat</h2>
-            <span class="text-sm text-red-100">Online</span>
-          </div>
-        </div>
-      </div>
-      <div class="flex items-center space-x-3">
-        <button onclick="/* openNewMessage() eliminado */" class="bg-white bg-opacity-20 p-2 rounded-full hover:bg-opacity-30 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-        </button>
-        <div class="relative">
-          <button onclick="/* toggleChatOptions() eliminado */" class="bg-white bg-opacity-20 p-2 rounded-full hover:bg-opacity-30 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-            </svg>
-          </button>
-          <!-- chat-options-menu eliminado -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Barra de búsqueda -->
-    <div class="p-4 border-b border-gray-200">
-      <div class="relative">
-        <input type="text" id="search-conversations" placeholder="Buscar conversaciones..." 
-               class="w-full p-3 pl-10 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-[#FE2C55]"
-               oninput="/* searchConversations() eliminado */">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      </div>
-    </div>
-
-    <!-- Lista de conversaciones -->
-    <div class="flex-1 overflow-y-auto">
-      <div id="conversations-container" class="divide-y divide-gray-100">
-        <!-- Las conversaciones se cargarán aquí -->
-      </div>
-      <div id="no-conversations" class="hidden flex-1 flex items-center justify-center text-gray-500 p-8">
-        <div class="text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
-          <p class="text-lg font-medium mb-2">暂无对话</p>
-          <p class="text-sm">与您最喜欢的作者开始对话</p>
-          <button onclick="/* openNewMessage() eliminado */" class="mt-4 bg-[#FE2C55] text-white px-6 py-2 rounded-full hover:bg-red-600 transition">
-          </button>
-        </div>
-      </div>
-    </div>
-
-    
-  </div>
-
-  <!-- individual-chat-view eliminado -->
-    <div class="p-4 bg-white border-t border-gray-200">
-      <div class="flex items-end space-x-3">
-        <button onclick="/* toggleVoiceMessage() eliminado */" class="p-3 text-gray-500 hover:text-[#FE2C55] transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-          </svg>
-        </button>
-        <button onclick="/* attachFile() eliminado */" class="p-3 text-gray-500 hover:text-[#FE2C55] transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-          </svg>
-        </button>
-        <div class="flex-1 relative">
-          <textarea id="message-input" placeholder="Escribe un mensaje..." 
-                   class="w-full p-3 pr-12 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#FE2C55] resize-none max-h-32"
-                   rows="1"
-                   oninput="/* handleMessageInput() eliminado */"
-                   onkeypress="/* handleKeyPress() eliminado */"></textarea>
-          <button onclick="/* toggleEmojiPicker() eliminado */" class="absolute right-3 bottom-3 text-gray-500 hover:text-[#FE2C55] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </button>
-        </div>
-        <button onclick="/* sendMessage() eliminado */" id="send-button" class="bg-[#FE2C55] text-white p-3 rounded-full hover:bg-red-600 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-          </svg>
-        </button>
-      </div>
-      
-      <!-- Emoji picker -->
-      <div id="emoji-picker" class="hidden absolute bottom-20 right-4 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-80 z-10">
-        <div class="grid grid-cols-8 gap-2">
-          <button onclick="insertEmoji('😀')" class="p-2 hover:bg-gray-100 rounded">😀</button>
-          <button onclick="insertEmoji('😂')" class="p-2 hover:bg-gray-100 rounded">😂</button>
-          <button onclick="insertEmoji('❤️')" class="p-2 hover:bg-gray-100 rounded">❤️</button>
-          <button onclick="insertEmoji('👍')" class="p-2 hover:bg-gray-100 rounded">👍</button>
+<!-- PANTALLA DE CHAT EN TIEMPO REAL - OCULTO POR DEFECTO -->
+<div id="chat-view" class="hidden">
           <button onclick="insertEmoji('👏')" class="p-2 hover:bg-gray-100 rounded">👏</button>
           <button onclick="insertEmoji('🔥')" class="p-2 hover:bg-gray-100 rounded">🔥</button>
           <button onclick="insertEmoji('✨')" class="p-2 hover:bg-gray-100 rounded">✨</button>
@@ -1800,11 +1704,11 @@ body {
 </div>
 
 <!-- MODAL PARA NUEVO MENSAJE -->
-<!-- New message modal removed -->
+<div id="new-message-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
   <div class="bg-white rounded-xl p-6 w-96 max-w-[90vw] max-h-[90vh] overflow-y-auto">
     <div class="flex justify-between items-center mb-4">
       <h3 class="text-xl font-bold">New Message</h3>
-      <button onclick="/* closeNewMessage() eliminado */" class="text-gray-500 hover:text-gray-700">
+      <button onclick="closeNewMessageModal()" class="text-gray-500 hover:text-gray-700">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
@@ -1831,10 +1735,10 @@ body {
       </div>
       
       <div class="flex space-x-3">
-        <button onclick="/* closeNewMessage() eliminado */" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl hover:bg-gray-300 transition">
+        <button onclick="closeNewMessageModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl hover:bg-gray-300 transition">
           Cancel
         </button>
-        <button onclick="/* sendNewMessage() eliminado */" class="flex-1 bg-[#FE2C55] text-white py-3 rounded-xl hover:bg-red-600 transition">
+        <button onclick="sendNewMessage()" class="flex-1 bg-[#FE2C55] text-white py-3 rounded-xl hover:bg-red-600 transition">
           Send
         </button>
       </div>
@@ -1844,9 +1748,24 @@ body {
 
 
 <!-- MODAL DE HISTORIA BLOQUEADA -->
-<div id="story-blocked-modal">
+<div id="story-blocked-modal" class="hidden">
   <img src="https://ideogram.ai/g/hJJQb0VZSQicLDiADD7CZQ/3" alt="Historia Bloqueada" class="w-3/4 h-auto">
 </div>
+
+<script>
+  function openNewMessageModal() {
+    document.getElementById('new-message-modal').classList.remove('hidden');
+  }
+  
+  function closeNewMessageModal() {
+    document.getElementById('new-message-modal').classList.add('hidden');
+  }
+  
+  function sendNewMessage() {
+    alert('Función de envío pendiente de configuración');
+    closeNewMessageModal();
+  }
+</script>
 
   <div id="auth-form" class="w-full h-screen flex flex-col justify-center p-6" style="display: flex;">
     <!-- Centered title -->
