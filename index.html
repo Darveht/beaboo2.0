@@ -2524,6 +2524,9 @@ document.getElementById('note-content').addEventListener('input', function() {
   }
 
   function checkScheduledChapters() {
+    const user = firebase.auth ? firebase.auth().currentUser : null;
+    if (!user) return;
+    
     const now = new Date().getTime();
     firebase.database().ref('scheduledChapters').once('value', snapshot => {
       snapshot.forEach(child => {
@@ -2535,10 +2538,8 @@ document.getElementById('note-content').addEventListener('input', function() {
           child.ref.update({ status: 'published' });
         }
       });
-    });
+    }).catch(err => console.log('checkScheduledChapters error:', err));
   }
-
-  setInterval(checkScheduledChapters, 60000);
 </script>
 
 <style>
@@ -4006,7 +4007,7 @@ function saveNote() {
     <!-- Sección principal: portada + título/autor -->
     <div class="flex items-start space-x-6 mb-8">
       <!-- Portada estilo Inkitt/Wattpad -->
-      <img id="detail-cover" src="/api/placeholder/400/600" alt="Portada de la historia"
+      <img id="detail-cover" src="https://via.placeholder.com/400x600" alt="Portada de la historia"
            class="w-40 sm:w-48 md:w-56 aspect-[2/3] object-cover rounded-2xl border-2 border-[#FE2C55] shadow-lg">
       
       <!-- Detalles de historia -->
@@ -4290,7 +4291,11 @@ function saveNote() {
   <div class="gift-container">
     <h2 class="text-xl font-bold mb-4 text-center text-white">Enviar Regalo</h2>
     <div class="gift-grid">
+    </div>
+  </div>
+</div>
 
+<script>
 async function loadPhotos() {
   const photosFeed = document.getElementById('photos-feed');
   if (!photosFeed) return;
@@ -5073,7 +5078,7 @@ function openPhotoDetail(photo) {
     
     card.innerHTML = `
       <div class="aspect-[3/4] relative">
-        <img src="${story.coverImage || '/api/placeholder/300/400'}" 
+        <img src="${story.coverImage || 'https://via.placeholder.com/300x400'}" 
              alt="${story.title}" 
              class="w-full h-full object-cover rounded-t-xl">
         <div class="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-xs">
@@ -6436,6 +6441,11 @@ function openSearchView() {
         document.getElementById('live-transmit-btn').style.display = "none";
       }
       
+      // Iniciar verificación de capítulos programados solo cuando el usuario esté autenticado
+      if (typeof checkScheduledChapters === 'function') {
+        setInterval(checkScheduledChapters, 60000);
+      }
+      
       // CARGAR ESTADÍSTICAS EN TIEMPO REAL
       loadUserStats(user.uid);
       
@@ -6648,7 +6658,7 @@ function openSearchView() {
     });
     
     // Actualizar contenido del modal
-    document.getElementById('detail-cover').src = story.coverImage || '/api/placeholder/800/400';
+    document.getElementById('detail-cover').src = story.coverImage || 'https://via.placeholder.com/800x400';
     document.getElementById('detail-title').textContent = story.title;
     let authorDisplay = (story.username || "Autor Desconocido") + getVerificationIcon(story.email || "");
     document.getElementById('detail-author').innerHTML = "Por " + authorDisplay;
@@ -6897,7 +6907,7 @@ document.getElementById('category-filter').addEventListener('change', performRea
       card.className = 'flex-shrink-0 w-48 cursor-pointer';
       card.innerHTML = `
           <div class="rounded-2xl overflow-hidden shadow-md">
-            <img src="${book.coverImage || '/api/placeholder/200/300'}" alt="${book.title}" class="w-full h-56 object-cover">
+            <img src="${book.coverImage || 'https://via.placeholder.com/200x300'}" alt="${book.title}" class="w-full h-56 object-cover">
           </div>
           <p class="mt-2 text-sm font-semibold">${book.title}</p>
         `;
@@ -8109,7 +8119,7 @@ document.getElementById('category-filter').addEventListener('change', performRea
       storyCard.innerHTML = `
           <div class="rounded-2xl overflow-hidden shadow-md transform transition-transform hover:scale-105">
             <div class="story-cover-container">
-              <img src="${story.coverImage || '/api/placeholder/200/300'}" alt="${story.title}" class="story-cover-image">
+              <img src="${story.coverImage || 'https://via.placeholder.com/200x300'}" alt="${story.title}" class="story-cover-image">
             </div>
           </div>
           <div class="mt-2">
@@ -8140,7 +8150,7 @@ document.getElementById('category-filter').addEventListener('change', performRea
         card.onclick = () => openStoryEdit(story);
         card.innerHTML = `
             <div class="rounded-2xl overflow-hidden shadow-md transform transition-transform hover:scale-105">
-              <img src="${story.coverImage || '/api/placeholder/200/300'}" alt="${story.title}" class="w-full h-40 object-cover">
+              <img src="${story.coverImage || 'https://via.placeholder.com/200x300'}" alt="${story.title}" class="w-full h-40 object-cover">
             </div>
             <div class="mt-2">
               <h3 class="font-semibold text-sm">${story.title}</h3>
@@ -8221,7 +8231,7 @@ document.getElementById('category-filter').addEventListener('change', performRea
     card.onclick = () => openStoryDetail(story);
     card.innerHTML = `
       <div class="rounded-2xl overflow-hidden shadow-md">
-        <img src="${story.coverImage || '/api/placeholder/200/300'}" alt="${story.title}" class="w-full h-40 object-cover">
+        <img src="${story.coverImage || 'https://via.placeholder.com/200x300'}" alt="${story.title}" class="w-full h-40 object-cover">
       </div>
       <div class="mt-2">
         <h3 class="font-semibold text-sm truncate">${story.title}</h3>
@@ -8307,7 +8317,7 @@ document.getElementById('category-filter').addEventListener('change', performRea
       card.innerHTML = `
         <div class="rounded-2xl overflow-hidden shadow-md">
           <div class="story-cover-container">
-            <img src="${story.coverImage || '/api/placeholder/200/300'}" alt="${story.title}" class="story-cover-image">
+            <img src="${story.coverImage || 'https://via.placeholder.com/200x300'}" alt="${story.title}" class="story-cover-image">
           </div>
         </div>
         <div class="mt-2">
@@ -8465,7 +8475,7 @@ document.getElementById('category-filter').addEventListener('change', performRea
         card.onclick = () => openStoryDetail(story);
         card.innerHTML = `
             <div class="rounded-2xl overflow-hidden shadow-md transform transition-transform hover:scale-105">
-              <img src="${story.coverImage || '/api/placeholder/200/300'}" alt="${story.title}" class="w-full h-40 object-cover">
+              <img src="${story.coverImage || 'https://via.placeholder.com/200x300'}" alt="${story.title}" class="w-full h-40 object-cover">
             </div>
             <div class="mt-2">
               <h3 class="font-semibold text-sm">${story.title}</h3>
@@ -8991,7 +9001,7 @@ function openCalendar() {
         div.className = 'bg-gray-100 p-4 rounded-lg';
         div.innerHTML = `
           <div class="flex items-center space-x-4">
-            <img src="${story.coverImage || '/api/placeholder/100/150'}" alt="${story.title}" class="w-20 h-30 object-cover rounded">
+            <img src="${story.coverImage || 'https://via.placeholder.com/100x150'}" alt="${story.title}" class="w-20 h-30 object-cover rounded">
             <div class="flex-1">
               <div class="flex items-center">
                 <h3 class="font-bold">${story.title}</h3>
@@ -9215,7 +9225,7 @@ function updateStoriesTable(story) {
   row.innerHTML = `
     <td class="p-4">
       <div class="flex items-center space-x-3">
-        <img src="${story.coverImage || '/api/placeholder/50/75'}" class="w-12 h-16 object-cover rounded" alt="${story.title}">
+        <img src="${story.coverImage || 'https://via.placeholder.com/50x75'}" class="w-12 h-16 object-cover rounded" alt="${story.title}">
         <div>
           <h4 class="font-bold">${story.title}</h4>
           <p class="text-sm text-gray-600">${new Date(story.createdAt).toLocaleDateString()}</p>
