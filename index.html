@@ -12,7 +12,7 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pap6t+K2bD6xIxQqkQ3sM8e+RXw7C3DyrgXV++o2aL/88+/9kS/l+SmpD8zZR1oN40Nq3QfT7HigDYfFW1zZAQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Sistema de Traducción Automática Mejorado -->
   <script type="text/javascript">
     // Detectar idioma del navegador y aplicar traducción inmediatamente
@@ -455,34 +455,6 @@ body {
     box-shadow: 0 0 0 10px rgba(254, 44, 85, 0);
   }
   100% {
-
-function saveScheduledChapter(chapterId, publishDate) {
-  firebase.database().ref('scheduledChapters/' + chapterId).set({
-    publishDate: publishDate,
-    status: 'pending'
-  });
-}
-
-function checkScheduledChapters() {
-  const now = new Date().getTime();
-  firebase.database().ref('scheduledChapters').once('value', snapshot => {
-    snapshot.forEach(child => {
-      const scheduled = child.val();
-      if (scheduled.status === 'pending' && new Date(scheduled.publishDate).getTime() <= now) {
-        // Publicar el capítulo
-        firebase.database().ref('stories/' + currentEditingStory.id + '/chapters/' + child.key).update({
-          status: 'published'
-        });
-        // Actualizar estado del capítulo programado
-        child.ref.update({ status: 'published' });
-      }
-    });
-  });
-}
-
-// Verificar capítulos programados cada minuto
-setInterval(checkScheduledChapters, 60000);
-
     box-shadow: 0 0 0 0 rgba(254, 44, 85, 0);
   }
 }
@@ -2567,11 +2539,7 @@ document.getElementById('note-content').addEventListener('input', function() {
   ]);
 </script>
 
-<style>
-  /* Estilos TikTok */
-  * {
-
-
+<script>
   async function handleNoteLike(noteId, likeButton) {
     const user = firebase.auth().currentUser;
     if (!user) {
@@ -2579,7 +2547,6 @@ document.getElementById('note-content').addEventListener('input', function() {
       return;
     }
 
-    // Verificar si ya dio like
     if (likeButton.classList.contains('text-[#FE2C55]')) {
       alert('Ya diste like a esta nota');
       return;
@@ -2614,7 +2581,6 @@ document.getElementById('note-content').addEventListener('input', function() {
         return;
       }
 
-      // Actualizar UI
       likeButton.classList.add('text-[#FE2C55]');
       const likesCount = likeButton.querySelector('.likes-count');
       if (likesCount) {
@@ -2631,6 +2597,34 @@ document.getElementById('note-content').addEventListener('input', function() {
     }
   }
 
+  function saveScheduledChapter(chapterId, publishDate) {
+    firebase.database().ref('scheduledChapters/' + chapterId).set({
+      publishDate: publishDate,
+      status: 'pending'
+    });
+  }
+
+  function checkScheduledChapters() {
+    const now = new Date().getTime();
+    firebase.database().ref('scheduledChapters').once('value', snapshot => {
+      snapshot.forEach(child => {
+        const scheduled = child.val();
+        if (scheduled.status === 'pending' && new Date(scheduled.publishDate).getTime() <= now) {
+          firebase.database().ref('stories/' + currentEditingStory.id + '/chapters/' + child.key).update({
+            status: 'published'
+          });
+          child.ref.update({ status: 'published' });
+        }
+      });
+    });
+  }
+
+  setInterval(checkScheduledChapters, 60000);
+</script>
+
+<style>
+  /* Estilos TikTok */
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -4449,6 +4443,7 @@ function openPhotoDetail(photo) {
   `;
   document.body.appendChild(modal);
 }
+</script>
 
       <!-- Ítems originales (algunos se muestran como GIF y otros en video para un look moderno) -->
       <div class="gift-item bg-black/20 backdrop-blur-sm rounded-lg" onclick="sendGift('cupido')">
