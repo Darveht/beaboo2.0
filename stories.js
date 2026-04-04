@@ -41,16 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('story-viewer-close').addEventListener('click', closeStoryViewer);
 
     // Load stories automatically on page load
-    setTimeout(() => {
-        loadStories();
-    }, 500);
-    
-    // Reload stories every 30 seconds to show new stories from other users
-    setInterval(() => {
-        loadStories();
-    }, 30000);
-
-    function handleFileSelect(e) {
+    // La carga de historias se moverá al listener de autenticación para asegu    // Listener de autenticación para cargar historias y otros datos de usuario
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            // Usuario autenticado, cargar historias
+            loadStories();
+            // Recargar historias cada 30 segundos
+            setInterval(() => {
+                loadStories();
+            }, 30000);
+        } else {
+            // Usuario no autenticado, limpiar historias si es necesario
+            storiesContainer.innerHTML = '';
+        }
+    });  function handleFileSelect(e) {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -85,8 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadStories() {
         const currentUser = auth.currentUser;
         if (!currentUser) {
-            // Intentar de nuevo en 1 segundo si el usuario no está autenticado aún
-            setTimeout(loadStories, 1000);
+            // Si no hay usuario, no se cargan historias.
             return;
         }
 
